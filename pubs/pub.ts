@@ -24,7 +24,7 @@ abstract class Pub {
         }
     }
 
-    protected abstract parseMenu(date: Dayjs): Promise<string>;
+    protected abstract printMenu(date: Dayjs): Promise<void>;
 
     protected abstract isDateInMenu(date: Dayjs, menuDates: string[]): boolean;
 }

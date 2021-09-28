@@ -8,10 +8,10 @@ class PivniceUCapa extends Pub {
 
     public constructor() {
         super('https://www.pivnice-ucapa.cz/denni-menu.php');
-        console.log('==> Fetching the daily menu from Pivnice U Čapa\n');
+        console.log('\n==> Fetching the daily menu from Pivnice U Čapa\n');
     }
 
-    public async parseMenu(date: dayjs.Dayjs): Promise<string> {
+    public async printMenu(date: dayjs.Dayjs): Promise<void> {
         const $ = await this.getHtmlPage();
         const dateElements = $('body').find('.listek .date');
 
@@ -32,10 +32,10 @@ class PivniceUCapa extends Pub {
         menuRows.map((idx, el) => {
             const day = $(el).find('.date').text().split('. ')[0];
             if (Number(day) === date.date()) {
-                const offer = $(el).find('.cont');
-                console.log(`Polévka: ${offer.children('.row-polevka').text().trim()}`);
+                const offers = $(el).find('.cont');
+                console.log(`Polévka: ${offers.children('.row-polevka').text().trim()}`);
                 
-                offer.children('.row-food').map((idx, el) => {
+                offers.children('.row-food').map((idx, el) => {
                     table.push([
                         $(el).find('.food').text().trim(), 
                         $(el).find('.price').text().trim()
@@ -44,8 +44,7 @@ class PivniceUCapa extends Pub {
             }
         });
 
-        console.log(table.toString());
-        return 'Hi';
+        console.log(`${table.toString()}\n`);
     }
 
     protected isDateInMenu(date: dayjs.Dayjs, menuDates: string[]): boolean {

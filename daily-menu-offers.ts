@@ -9,10 +9,13 @@ class DailyMenuOffers {
             this.printHeader();
             const date = dayjs('2021-09-29');
             console.log(`\nDate: ${date.format('dddd, DD/MM/YYYY')}\n`);
+            console.log('-'.repeat(process.stdout.columns));
 
             this.validateDate(date);
             const pub = new PivniceUCapa();
-            pub.parseMenu(date);
+            pub.printMenu(date).then(data => {
+                console.log('-'.repeat(process.stdout.columns));
+            });
         } catch (err) {
            console.error(err.message); 
         }
