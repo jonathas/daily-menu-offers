@@ -10,34 +10,38 @@ class PivniceUCapa extends Pub {
 
     public constructor() {
         super('https://www.pivnice-ucapa.cz/denni-menu.php');
-        console.log('\n==> Fetching the daily menu from Pivnice U Čapa\n');
         this.initializeTables();
     }
 
-    private initializeTables() {
+    protected initializeTables(): void {
         this.mainDishesTable = new Table({
             head: [colors.cyan('Hlavní chod'), colors.cyan('Cena')]
         });
     }
 
     public async printMenu(date: dayjs.Dayjs): Promise<void> {
-        const $ = await this.getHtmlPage();
-        this.validateDates($, date);
+        try {
+            console.log('\n==> Fetching the daily menu from Pivnice U Čapa\n');
+            const $ = await this.getHtmlPage();
+            this.validateDates($, date);
 
-        const menuRows = $('body').find('.listek > .row');
-        menuRows.map((idx, el) => {
-            const day = $(el).find('.date').text().split('. ')[0];
-            if (Number(day) === date.date()) {
-                const offers = $(el).find('.cont');
-                console.log(this.getSoup($, offers));
-                this.parseMainDishes($, offers);
-            }
-        });
+            const menuRows = $('body').find('.listek > .row');
+            menuRows.map((idx, el) => {
+                const day = $(el).find('.date').text().split('. ')[0];
+                if (Number(day) === date.date()) {
+                    const offers = $(el).find('.cont');
+                    console.log(this.getSoup($, offers));
+                    this.parseMainDishes($, offers);
+                }
+            });
 
-        console.log(`${this.mainDishesTable.toString()}\n`);
+            console.log(`${this.mainDishesTable.toString()}`);
+        } catch (err) {
+            console.log(err.message);
+        }
     }
 
-    private validateDates($: CheerioAPI, date: dayjs.Dayjs) {
+    private validateDates($: CheerioAPI, date: dayjs.Dayjs): void {
         const dateElements = $('body').find('.listek .date');
         const menuDates = dateElements.map((idx, el) => 
             $(el).text().trim().split('. ').reverse().join('-'));
@@ -47,11 +51,11 @@ class PivniceUCapa extends Pub {
         }
     }
 
-    private getSoup($: CheerioAPI, el: Cheerio<Element>): string {
+    protected getSoup($: CheerioAPI, el: Cheerio<Element>): string {
         return `Polévka: ${el.children('.row-polevka').text().trim()}\n`;
     }
 
-    private parseMainDishes($: CheerioAPI, el: Cheerio<Element>): void {
+    protected parseMainDishes($: CheerioAPI, el: Cheerio<Element>): void {
         el.children('.row-food').map((idx, el) => {
             this.mainDishesTable.push([
                 $(el).find('.food').text().trim(), 
@@ -61,4 +65,4 @@ class PivniceUCapa extends Pub {
     }
 }
 
-export default PivniceUCapa;
+export default new PivniceUCapa();

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cheerio, { CheerioAPI } from 'cheerio';
+import cheerio, { Cheerio, CheerioAPI, Element } from 'cheerio';
 import { Dayjs } from 'dayjs';
 
 abstract class Pub {
@@ -8,6 +8,11 @@ abstract class Pub {
     public constructor(menuPageUrl: string) {
         this.url = menuPageUrl;
     }
+
+    protected abstract initializeTables(): void;
+    public abstract printMenu(date: Dayjs): Promise<void>;
+    protected abstract getSoup($: CheerioAPI, el: Cheerio<Element>): string;
+    protected abstract parseMainDishes($: CheerioAPI, el: Cheerio<Element>): void;
 
     protected async getHtmlPage(): Promise<CheerioAPI> {
         const html = await this.fetchHtml();
@@ -23,8 +28,6 @@ abstract class Pub {
             return '';
         }
     }
-
-    protected abstract printMenu(date: Dayjs): Promise<void>;
 }
 
 export default Pub;

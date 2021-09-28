@@ -11,11 +11,10 @@ class Suzies extends Pub {
 
     public constructor() {
         super('https://www.suzies.cz/poledni-menu');
-        console.log('\n==> Fetching the daily menu from Suzie\'s\n');
         this.initializeTables();
     }
 
-    private initializeTables() {
+    protected initializeTables(): void {
         this.mainDishesTable = new Table({
             head: [colors.cyan('Hlavní chod'), colors.cyan('Cena')],
             colWidths: [180, 10]
@@ -27,25 +26,30 @@ class Suzies extends Pub {
     }
 
     public async printMenu(date: dayjs.Dayjs): Promise<void> {
-        const $ = await this.getHtmlPage();
-        const dayElements = $('body').find('.menu-pages .item');
+        try {
+            console.log('\n==> Fetching the daily menu from Suzie\'s\n');
+            const $ = await this.getHtmlPage();
+            const dayElements = $('body').find('.menu-pages .item');
 
-        this.validateDate($, dayElements, date);
+            this.validateDate($, dayElements, date);
 
-        dayElements.map((idx, el) => {
-            const day = this.parseDate($, el).split('.')[0];
-            if (Number(day) === date.date()) {
-                this.parseSoup($, el);
-                this.parseMainDishes($, el);
-                this.parseDessert($, el);
-            }
-        });
+            dayElements.map((idx, el) => {
+                const day = this.parseDate($, el).split('.')[0];
+                if (Number(day) === date.date()) {
+                    console.log(this.getSoup($, el));
+                    this.parseMainDishes($, el);
+                    this.parseDessert($, el);
+                }
+            });
 
-        console.log(`${this.mainDishesTable.toString()}\n`);
-        console.log(`${this.dessertTable.toString()}\n`);
+            console.log(`${this.mainDishesTable.toString()}\n`);
+            console.log(`${this.dessertTable.toString()}`);
+        } catch (err) {
+            console.log(err.message);
+        }
     }
 
-    private validateDate($: CheerioAPI, dayElements: Cheerio<Element>, date: dayjs.Dayjs) {
+    private validateDate($: CheerioAPI, dayElements: Cheerio<Element>, date: dayjs.Dayjs): void {
         const menuDates = dayElements.clone().map((idx, el) => 
         this.parseDate($, el)).get()
         .map(d => d.split('.').reverse().join('-'));
@@ -55,15 +59,15 @@ class Suzies extends Pub {
         }
     }
 
-    private parseDate($: CheerioAPI, el: BasicAcceptedElems<Element>) {
+    private parseDate($: CheerioAPI, el: BasicAcceptedElems<Element>): string {
         return $(el).find('h2').text().trim().split(' ')[1];
     }
 
-    private parseSoup($: CheerioAPI, el: BasicAcceptedElems<Element>) {
-        console.log(`Polévka: ${$(el).children('div').eq(1).text().trim()}\n`);
+    protected getSoup($: CheerioAPI, el: BasicAcceptedElems<Element>): string {
+       return `Polévka: ${$(el).children('div').eq(1).text().trim()}\n`;
     }
 
-    private parseMainDishes($: CheerioAPI, el: BasicAcceptedElems<Element>) {
+    protected parseMainDishes($: CheerioAPI, el: BasicAcceptedElems<Element>): void {
         const mainDishes = $(el).children('div').slice(2, -1);
 
         mainDishes.map((idx, el) => {
@@ -90,4 +94,4 @@ class Suzies extends Pub {
     }
 }
 
-export default Suzies;
+export default new Suzies();
