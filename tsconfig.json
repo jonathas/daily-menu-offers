@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "outDir": "bin",
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "removeComments": false,
+        "allowSyntheticDefaultImports": true,
+    },
+    "exclude": [
+        "node_modules",
+        "coverage"
+    ]
+}
