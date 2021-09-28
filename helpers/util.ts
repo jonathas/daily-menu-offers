@@ -1,7 +1,10 @@
+import * as dayjs from 'dayjs';
+
 class Util {
 
-    public addTrailingZero(x: number) {
-        return (x < 10) ? `0${x}` : x;
+    public isDateInMenu(date: dayjs.Dayjs, menuDates: string[]): boolean {
+        const dateInMenu = menuDates.find(d => date.isSame(dayjs(d), 'day'));
+        return (dateInMenu) ? true : false;
     }
 
 }

@@ -16,10 +16,9 @@ class PivniceUCapa extends Pub {
         const dateElements = $('body').find('.listek .date');
 
         const menuDates = dateElements.map((idx, el) => 
-            $(el).text().trim().split('. ').map(e => 
-                Util.addTrailingZero(Number(e))).reverse().join('-'));
+            $(el).text().trim().split('. ').reverse().join('-'));
 
-        if (!this.isDateInMenu(date, menuDates.get())) {
+        if (!Util.isDateInMenu(date, menuDates.get())) {
             throw new Error('Nothing found for today :(');
         }
 
@@ -46,12 +45,6 @@ class PivniceUCapa extends Pub {
 
         console.log(`${table.toString()}\n`);
     }
-
-    protected isDateInMenu(date: dayjs.Dayjs, menuDates: string[]): boolean {
-        const dateInMenu = menuDates.find(d => date.isSame(dayjs(d), 'day'));
-        return (dateInMenu) ? true : false;
-    }
-
 }
 
 export default PivniceUCapa;

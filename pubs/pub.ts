@@ -25,8 +25,6 @@ abstract class Pub {
     }
 
     protected abstract printMenu(date: Dayjs): Promise<void>;
-
-    protected abstract isDateInMenu(date: Dayjs, menuDates: string[]): boolean;
 }
 
 export default Pub;
