@@ -25,7 +25,7 @@
         "@typescript-eslint/ban-types": ["off"],
         "no-console": "off",
         "no-var": "error",
-        "quotes": "error",
+        "quotes": [2, "single"],
         "semi": "error"
     }
 }

@@ -1,16 +1,32 @@
 import axios from 'axios';
+import cheerio, { CheerioAPI } from 'cheerio';
+import { Dayjs } from 'dayjs';
 
-class Pub {
-    protected url: string;
+abstract class Pub {
+    private url: string;
 
-    protected async fetchMenu() {
+    public constructor(menuPageUrl: string) {
+        this.url = menuPageUrl;
+    }
+
+    protected async getHtmlPage(): Promise<CheerioAPI> {
+        const html = await this.fetchHtml();
+        return cheerio.load(html);
+    }
+
+    private async fetchHtml(): Promise<string> {
         try {
             const { data } = await axios.get(this.url);
             return data;
         } catch (err) {
             console.error(`ERROR: An error occurred while trying to fetch the URL: ${this.url}: ${err.message}`);
+            return '';
         }
     }
+
+    protected abstract parseMenu(date: Dayjs): Promise<string>;
+
+    protected abstract isDateInMenu(date: Dayjs, menuDates: string[]): boolean;
 }
 
 export default Pub;
