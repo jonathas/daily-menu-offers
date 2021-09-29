@@ -16,13 +16,11 @@ class Suzies extends Pub {
 
     protected initializeTables(): void {
         this.mainDishesTable = new Table({
-            head: [colors.cyan('Hlavní chod'), colors.cyan('Cena')],
-            colWidths: [180, 10]
+            head: [colors.cyan('Hlavní chod'), colors.cyan('Cena')]
         });
 
         this.dessertTable = new Table({
-            head: [colors.cyan('Dezert'), colors.cyan('Ks'), colors.cyan('Cena')],
-            colWidths: [180, 10]
+            head: [colors.cyan('Dezert'), colors.cyan('Ks'), colors.cyan('Cena')]
         });
     }
 
@@ -35,7 +33,7 @@ class Suzies extends Pub {
             this.validateDate($, dayElements, date);
 
             dayElements.map((idx, el) => {
-                const day = this.parseDate($, el).split('.')[0];
+                const day = this.parseDate($, el, date).split('.')[0];
                 if (Number(day) === date.date()) {
                     console.log(this.getSoup($, el));
                     this.parseMainDishes($, el);
@@ -52,7 +50,7 @@ class Suzies extends Pub {
 
     private validateDate($: CheerioAPI, dayElements: Cheerio<Element>, date: dayjs.Dayjs): void {
         const menuDates = dayElements.clone().map((idx, el) => 
-        this.parseDate($, el)).get()
+        this.parseDate($, el, date)).get()
         .map(d => d.split('.').reverse().join('-'));
 
         if (!Util.isDateInMenu(date, menuDates)) {
@@ -60,8 +58,14 @@ class Suzies extends Pub {
         }
     }
 
-    private parseDate($: CheerioAPI, el: BasicAcceptedElems<Element>): string {
-        return $(el).find('h2').text().trim().split(' ')[1];
+    private parseDate($: CheerioAPI, el: BasicAcceptedElems<Element>, date: dayjs.Dayjs): string {
+        let dateInPage = $(el).find('h2').text().trim().split(' ')[1];
+        const dateParts = dateInPage.split('.');
+        if (dateParts[2] === '') {
+            dateParts[2] = date.year().toString();
+            dateInPage = dateParts.join('.');
+        }
+        return dateInPage;
     }
 
     private getSoup($: CheerioAPI, el: BasicAcceptedElems<Element>): string {
