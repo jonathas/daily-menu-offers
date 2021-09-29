@@ -21,7 +21,8 @@ class Suzies extends Pub {
         });
 
         this.dessertTable = new Table({
-            head: [colors.cyan('Dezert'), colors.cyan('Ks'), colors.cyan('Cena')]
+            head: [colors.cyan('Dezert'), colors.cyan('Ks'), colors.cyan('Cena')],
+            colWidths: [180, 10]
         });
     }
 
@@ -63,7 +64,7 @@ class Suzies extends Pub {
         return $(el).find('h2').text().trim().split(' ')[1];
     }
 
-    protected getSoup($: CheerioAPI, el: BasicAcceptedElems<Element>): string {
+    private getSoup($: CheerioAPI, el: BasicAcceptedElems<Element>): string {
        return `Polévka: ${$(el).children('div').eq(1).text().trim()}\n`;
     }
 

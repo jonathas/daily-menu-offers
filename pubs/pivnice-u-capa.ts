@@ -15,7 +15,8 @@ class PivniceUCapa extends Pub {
 
     protected initializeTables(): void {
         this.mainDishesTable = new Table({
-            head: [colors.cyan('Hlavní chod'), colors.cyan('Cena')]
+            head: [colors.cyan('Hlavní chod'), colors.cyan('Cena')],
+            colWidths: [100, 10]
         });
     }
 
@@ -51,7 +52,7 @@ class PivniceUCapa extends Pub {
         }
     }
 
-    protected getSoup($: CheerioAPI, el: Cheerio<Element>): string {
+    private getSoup($: CheerioAPI, el: Cheerio<Element>): string {
         return `Polévka: ${el.children('.row-polevka').text().trim()}\n`;
     }
 

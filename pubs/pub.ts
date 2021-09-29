@@ -12,7 +12,6 @@ abstract class Pub {
 
     protected abstract initializeTables(): void;
     public abstract printMenu(date: Dayjs): Promise<void>;
-    protected abstract getSoup($: CheerioAPI, el: Cheerio<Element>): string;
     protected abstract parseMainDishes($: CheerioAPI, el: Cheerio<Element>): void;
 
     protected async getHtmlPage(legacy = false): Promise<CheerioAPI> {
