@@ -8,15 +8,27 @@ The information is printed to the console.
 
 It's good to know what's being cooked when you don't know what you're craving.
 
+## Running
+
+- Install yarn if you don't have it
+- Run the command to install the packages:
+
+```bash
+yarn install
+```
+
+- Run the script:
+
+```bash
+yarn start
+```
+
+Example output:
+
+![Screenshot](./screenshot.png "screenshot")
+
 ## Pubs
 
 - [Pivnice U Čapa](https://www.pivnice-ucapa.cz/denni-menu.php)
 - [Suzie's Steak Pub](http://www.suzies.cz/poledni-menu)
 - [Veroni Cafe](https://www.menicka.cz/4921-veroni-coffee--chocolate.html)
-
-## TODO
-
-- Implement Veroni
-- Expect date via parameter
-- Complete README here
-- Implement unit tests
