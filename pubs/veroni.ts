@@ -28,7 +28,7 @@ class Veroni extends Pub {
     public async printMenu(date: dayjs.Dayjs): Promise<void> {
         try {
             console.log('\n==> Fetching the daily menu from Veroni\n');
-            const $ = await this.getHtmlPage();
+            const $ = await this.getHtmlPage(true);
             const dayElements = $('body').find('.obsah');
 
             dayElements.children('.menicka').map((idx, el) => {
@@ -51,11 +51,6 @@ class Veroni extends Pub {
         } catch (err) {
             console.log(err.message);
         }
-    }
-
-    protected async getHtmlPage(): Promise<CheerioAPI> {
-        const html = await this.fetchLegacyEncodedHtml();
-        return cheerio.load(html);
     }
 
     private validateDate($: CheerioAPI, dayElements: Cheerio<Element>, date: dayjs.Dayjs): void {
