@@ -1,6 +1,8 @@
 import axios from 'axios';
 import cheerio, { Cheerio, CheerioAPI, Element } from 'cheerio';
 import { Dayjs } from 'dayjs';
+import * as iconv from 'iconv-lite';
+import * as https from 'https';
 
 abstract class Pub {
     private url: string;
@@ -19,10 +21,25 @@ abstract class Pub {
         return cheerio.load(html);
     }
 
+    protected fetchLegacyEncodedHtml(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            https.get(this.url, res => {
+                (res as any).pipe(iconv.decodeStream('win1250'))
+                    .collect((err: Error, decodedBody: string) => {
+                        if (err) {
+                            console.error(`ERROR: An error occurred while trying to fetch the URL: ${this.url}: ${err.message}`);
+                            return reject('');
+                        }
+                        return resolve(decodedBody);
+                });
+            });
+        });  
+    }
+
     private async fetchHtml(): Promise<string> {
         try {
-            const { data } = await axios.get(this.url);
-            return data;
+            const response = await axios.get(this.url);
+            return response.data;
         } catch (err) {
             console.error(`ERROR: An error occurred while trying to fetch the URL: ${this.url}: ${err.message}`);
             return '';

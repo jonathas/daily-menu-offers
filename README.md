@@ -13,3 +13,10 @@ It's good to know what's being cooked when you don't know what you're craving.
 - [Pivnice U Čapa](https://www.pivnice-ucapa.cz/denni-menu.php)
 - [Suzie's Steak Pub](http://www.suzies.cz/poledni-menu)
 - [Veroni Cafe](https://www.menicka.cz/4921-veroni-coffee--chocolate.html)
+
+## TODO
+
+- Implement Veroni
+- Expect date via parameter
+- Complete README here
+- Implement unit tests
