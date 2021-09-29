@@ -1,6 +1,6 @@
 {
     "name": "daily-menu-offers",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "What are my favourite pubs/restaurants serving today?",
     "main": "index.js",
     "scripts": {
