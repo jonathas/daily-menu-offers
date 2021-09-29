@@ -1,7 +1,7 @@
 module.exports = {
     hooks: {
         "after:bump": ['npx auto-changelog -p'],
-        "after:git:release": ["git checkout develop", "git merge master", "git push origin development"]
+        "after:git:release": ["git checkout develop", "git merge master", "git push origin develop"]
     },
     git: {
         requireBranch: "master",
