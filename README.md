@@ -17,11 +17,19 @@ It's good to know what's being cooked when you don't know what you're craving.
 yarn install
 ```
 
-- Run the script:
+- Run the script (today's date):
 
 ```bash
 yarn start
 ```
+
+- Optional: Run the script (specifying a date):
+
+```bash
+yarn start --date 2021-10-01
+```
+
+Ps: The date format must be YYYY-MM-DD
 
 Example output:
 

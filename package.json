@@ -30,12 +30,14 @@
         "figlet": "^1.5.2",
         "iconv-lite": "^0.6.3",
         "ts-node": "^10.2.1",
-        "typescript": "^4.4.3"
+        "typescript": "^4.4.3",
+        "yargs": "^17.2.1"
     },
     "devDependencies": {
         "@commitlint/cli": "^13.2.0",
         "@commitlint/config-conventional": "^13.2.0",
         "@types/figlet": "^1.5.4",
+        "@types/jest": "^27.0.2",
         "@typescript-eslint/eslint-plugin": "^4.32.0",
         "@typescript-eslint/parser": "^4.32.0",
         "auto-changelog": "^2.3.0",

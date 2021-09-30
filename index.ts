@@ -1,2 +1,3 @@
 import DailyMenuOffers from './daily-menu-offers';
-new DailyMenuOffers();
+import { argv } from 'yargs';
+new DailyMenuOffers((argv.date) ? String(argv.date) : '');

@@ -5,9 +5,9 @@ import Util from './helpers/util';
 class DailyMenuOffers {
     private date: dayjs.Dayjs;
 
-    public constructor() {
+    public constructor(date = '') {
         try {
-            this.date = dayjs();
+            this.date = (date) ? dayjs(date) : dayjs();
             this.printHeader();
             this.validateDate();
             this.getOffers();
