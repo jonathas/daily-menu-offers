@@ -31,7 +31,7 @@ class Veroni extends Pub {
         try {
             console.log('\n==> Fetching the daily menu from Veroni\n');
             const $ = await this.getHtmlPage(true);
-            const dayElements = $('body').find('.obsah .menicka');
+            const dayElements = this.getDayElements($);
 
             this.validateDate($, dayElements, date);
 
@@ -52,6 +52,10 @@ class Veroni extends Pub {
         } catch (err) {
             console.log(err.message);
         }
+    }
+
+    private getDayElements($: CheerioAPI): Cheerio<Element> {
+        return $('body').find('.obsah .menicka');
     }
 
     private validateDate($: CheerioAPI, dayElements: Cheerio<Element>, date: dayjs.Dayjs): void {

@@ -34,6 +34,7 @@ abstract class Pub {
         return new Promise((resolve, reject) => {
             response.data.pipe(iconv.decodeStream('win1250'))
                 .collect((err: Error, decodedBody: string) => {
+                    /* istanbul ignore next */
                     if (err) {
                         console.error(`ERROR: An error occurred while trying to fetch the URL: ${this.url}: ${err.message}`);
                         return reject('');
@@ -47,7 +48,7 @@ abstract class Pub {
         try {
             const response = await axios.get(this.url);
             return response.data;
-        } catch (err) {
+        } catch (err) /* istanbul ignore next */ {
             console.error(`ERROR: An error occurred while trying to fetch the URL: ${this.url}: ${err.message}`);
             return '';
         }

@@ -59,13 +59,17 @@ class Suzies extends Pub {
     }
 
     private parseDate($: CheerioAPI, el: BasicAcceptedElems<Element>, date: dayjs.Dayjs): string {
-        let dateInPage = $(el).find('h2').text().trim().split(' ')[1];
+        let dateInPage = this.getDateFromPage($, el);
         const dateParts = dateInPage.split('.');
         if (dateParts[2] === '') {
             dateParts[2] = date.year().toString();
             dateInPage = dateParts.join('.');
         }
         return dateInPage;
+    }
+
+    private getDateFromPage($: CheerioAPI, el: BasicAcceptedElems<Element>) {
+        return $(el).find('h2').text().trim().split(' ')[1];
     }
 
     private getSoup($: CheerioAPI, el: BasicAcceptedElems<Element>): string {

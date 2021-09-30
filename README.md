@@ -1,5 +1,7 @@
 # Daily Menu Offers
 
+[![Coverage Status](https://coveralls.io/repos/github/jonathas/daily-menu-offers/badge.svg?branch=develop)](https://coveralls.io/github/jonathas/daily-menu-offers?branch=develop)
+
 What are my favourite pubs/restaurants serving today?
 
 Every pub presents information about its daily or weekly menu somewhere on the web.
