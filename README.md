@@ -10,6 +10,8 @@ The information is printed to the console.
 
 It's good to know what's being cooked when you don't know what you're craving.
 
+![Screenshot](./screenshot.png "screenshot")
+
 ## Running
 
 - Install yarn if you don't have it
@@ -33,9 +35,13 @@ yarn start --date 2021-10-01
 
 Ps: The date format must be YYYY-MM-DD
 
-Example output:
+## Testing
 
-![Screenshot](./screenshot.png "screenshot")
+In order to run the tests, run the following command:
+
+```bash
+yarn test
+```
 
 ## Pubs
 
